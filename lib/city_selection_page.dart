@@ -15,10 +15,12 @@ class CitySelectionPage extends StatelessWidget {
           ),
         ],
       ),
-      body: CitySelectionForm(
-        onCitySelected: (location) {
-          Navigator.pop(context, location); // Kirim kota yang dipilih kembali
-        },
+      body: SingleChildScrollView(
+        child: CitySelectionForm(
+          onCitySelected: (location) {
+            Navigator.pop(context, location); // Kirim kota yang dipilih kembali
+          },
+        ),
       ),
     );
   }
