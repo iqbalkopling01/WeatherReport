@@ -42,12 +42,13 @@ class _HomepageState extends State<Homepage> {
     });
     await getData();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0x000fff99),
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: const Color(0x000fff99),
+        backgroundColor: Colors.blue,
         elevation: 0.0,
         title: Text(
           "Weather Report",
@@ -68,44 +69,46 @@ class _HomepageState extends State<Homepage> {
           color: Colors.black,
         ),
       ),
-      body: FutureBuilder(
-        future: getData(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                currentWeather(Icons.wb_sunny_sharp, "${data.temp}", location), // Menampilkan location
-                SizedBox(
-                  height: 20.0,
-                ),
-                Text(
-                  "Additional Info",
-                  style: TextStyle(
-                    fontSize: 24,
-                    color: Color(0xdd212121),
-                    fontWeight: FontWeight.bold,
+      body: SingleChildScrollView(
+        child: FutureBuilder(
+          future: getData(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  currentWeather(Icons.wb_sunny_sharp, "${data.temp}", location),
+                  SizedBox(
+                    height: 20.0,
                   ),
-                ),
-                Divider(),
-                SizedBox(
-                  height: 20,
-                ),
-                additionalinfo(
-                  "${data.wind}",
-                  "${data.humidity}",
-                  "${data.pressure}",
-                  "${data.feelsLike}",
-                ),
-              ],
-            );
-          } else if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          return Container();
-        },
+                  Text(
+                    "Additional Info",
+                    style: TextStyle(
+                      fontSize: 24,
+                      color: Color(0xdd212121),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Divider(),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  additionalinfo(
+                    "${data.wind}",
+                    "${data.humidity}",
+                    "${data.pressure}",
+                    "${data.feelsLike}",
+                  ),
+                ],
+              );
+            } else if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return Container();
+          },
+        ),
       ),
     );
   }
